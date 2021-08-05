@@ -44,5 +44,5 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 ## workarounds
 - cannot connect to Rstudio 
-  - cd ~
+  - cd /home
   - sudo chown -R opencpu opencpu 
