@@ -27,6 +27,15 @@ see: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-doc
 6. sudo apt install docker-ce
 7. sudo systemctl status docker
 
+### docker compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+## opencpu image
+1. git clone https://github.com/vorgehen/snippet.git
+2. cd snippet
+3. sudo docker-compose up --build
+
 ## basic docker
 - sudo docker container ls 
 - sudo docker exec -it ce4d29f10666 /bin/bash 
