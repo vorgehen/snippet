@@ -7,8 +7,8 @@
 4. Memory: default (8GiB)
 5. Tags: no
 7. security Group: new launch-wizard-2
-
-New Key Pair snippet
+8. New Key Pair "snippet"
+9. Add TCP all Ports to security group
 
 ## software
 Connect to server with user ubuntu
@@ -34,7 +34,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 ## opencpu image
 1. git clone https://github.com/vorgehen/snippet.git
 2. cd snippet
-3. sudo docker-compose up --build
+3. sudo docker-compose up --build (up to 30 min to build)
 
 ## basic docker
 - sudo docker container ls 
