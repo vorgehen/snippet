@@ -8,5 +8,5 @@ services:
       context: ./opencpu
       dockerfile: Dockerfile.dev
     ports:
-      - 80:80
+      - 8080:8080
       - 8004:8004
