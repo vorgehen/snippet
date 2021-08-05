@@ -9,6 +9,7 @@
 7. security Group: new launch-wizard-2
 8. New Key Pair "snippet"
 9. Add TCP all Ports to security group
+10. 10 Enable DNS hostnames for VPC (some proxies do not allow Ip's?) 
 
 ## software
 Connect to server with user ubuntu
