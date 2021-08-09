@@ -1,0 +1,10 @@
+Package: snippet
+Type: Package
+Title: Liefert Snippets fuer das Projektmanagement
+Version: 0.1.7
+Author: Robert Risch
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: Ein Projekt mit zwei Domaenen: SQM und SBM. Fuer SQM ist noch nicht klar, welche Laufzeitumgebung eingesetzt wird, somit ist auch insbesondere das zu benutzende "Oekosystem noch nicht bestimmt. Die Domaenen werden ueber eine Prozessanwendung "verknuepft". Ergebnisreports der Prozessanwendung werden in ein Document Management System (DMS) geschrieben. Das Package soll folgende openCpu Funktionalitaeten demonstrieren koennen.
+License: MIT
+Encoding: UTF-8
+LazyData: true
