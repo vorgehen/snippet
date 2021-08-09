@@ -3,7 +3,7 @@ version: '3'
 services:
   opencpu:
     volumes:
-      - ./workspace:/home/opencpu
+      - "./workspace:/home/opencpu:rw"
     build:
       context: ./opencpu
       dockerfile: Dockerfile.dev
