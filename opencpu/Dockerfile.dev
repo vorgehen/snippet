@@ -48,9 +48,6 @@ RUN \
   ln -sf /proc/self/fd/1 /var/log/opencpu/apache_access.log && \
   ln -sf /proc/self/fd/1 /var/log/opencpu/apache_error.log
 
-RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))'
-COPY ./snippet_0.1.7.tar.gz ~/snippet_0.1.7.tar.gz
-RUN R -e 'install.packages("~/snippet_0.1.7.tar.gz", repos = NULL, type = "source", lib = "/usr/local/lib/R/site-library")'
 # Set opencpu password so that we can login
 RUN \
   echo "opencpu:opencpu" | chpasswd
@@ -61,6 +58,11 @@ EXPOSE 80
 EXPOSE 443
 EXPOSE 8004
 
+USER opencpu
+RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))'
+RUN R -e 'install.packages("~/snippet_0.1.7.tar.gz", repos = NULL, type = "source", lib = "/usr/local/lib/R/site-library")'
+
+USER root
 # Start non-daemonized webserver
 CMD /usr/lib/rstudio-server/bin/rserver && apachectl -DFOREGROUND
 
