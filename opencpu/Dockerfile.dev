@@ -58,14 +58,20 @@ EXPOSE 80
 EXPOSE 443
 EXPOSE 8004
 
+# SNIPPET LIBRARIES START
 USER opencpu
 RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))'
-RUN R CMD build snippet
-RUN R CMD check snippet_0.1.7.tar.gz
-RUN R CMD INSTALL -l snippet_0.1.7.tar.gz 
 
 USER root
+COPY snippet_0.1.7.tar.gz snippet_0.1.7.tar.gz
+RUN R CMD INSTALL snippet_0.1.7.tar.gz --library=/usr/local/lib/R/site-library
+
+RUN sudo apt-get install -y pandoc
+RUN sudo apt-get install -y texlive-base
+# SNIPPET LIBRARIES END
+
 # Start non-daemonized webserver
+USER root
 CMD /usr/lib/rstudio-server/bin/rserver && apachectl -DFOREGROUND
 
 
