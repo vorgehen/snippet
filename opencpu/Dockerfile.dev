@@ -60,7 +60,7 @@ EXPOSE 8004
 
 USER opencpu
 RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))'
-RUN R CMD INSTALL -l ~/snippet_0.1.7.tar.gz 
+RUN R CMD INSTALL -l /home/opencpu/snippet_0.1.7.tar.gz 
 
 USER root
 # Start non-daemonized webserver
