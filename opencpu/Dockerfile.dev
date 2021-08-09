@@ -61,4 +61,4 @@ EXPOSE 8004
 CMD /usr/lib/rstudio-server/bin/rserver && apachectl -DFOREGROUND
 
 RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))'
-RUN R -e 'install.packages("~/snippet_0.1.7.tar.gz", repos = NULL, type = "source", lib = "/usr/local/lib/R/site-library")'
+RUN R -e 'install.packages("/home/opencpu/snippet_0.1.7.tar.gz", repos = NULL, type = "source", lib = "/usr/local/lib/R/site-library")'
