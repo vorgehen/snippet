@@ -84,9 +84,10 @@ EXPOSE 443
 EXPOSE 8004
 
 # SNIPPET LIBRARIES START
-USER opencpu
-RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))'
+RUN  apt-get install -y wget make devscripts apache2-dev apache2 libapreq2-dev r-base r-base-dev libapparmor-dev libcurl4-openssl-dev libprotobuf-dev protobuf-compiler libcairo2-dev xvfb xauth xfonts-base curl libssl-dev libxml2-dev libicu-dev pkg-config libssh2-1-dev locales apt-utils && \
 
+USER opencpu
+RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))' > /dev/null
 USER root
 COPY snippet_0.1.7.tar.gz snippet_0.1.7.tar.gz
 RUN R CMD INSTALL snippet_0.1.7.tar.gz --library=/usr/local/lib/R/site-library
