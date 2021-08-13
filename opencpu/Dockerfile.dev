@@ -38,7 +38,7 @@ RUN \
 
 # Build R packages used by Snippet Service
 USER root
-RUN sudo useradd opencpu
+RUN useradd opencpu
 USER opencpu
 RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))' > /dev/null
 
