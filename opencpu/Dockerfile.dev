@@ -25,7 +25,7 @@ RUN \
   wget --quiet https://github.com/opencpu/opencpu-server/archive/v${BRANCH}.tar.gz && \
   tar xzf v${BRANCH}.tar.gz && \
   cd opencpu-server-${BRANCH} && \
-  dpkg-buildpackage -us -uc > /dev/null 2>&1
+  dpkg-buildpackage -us -uc > /dev/null
 
 FROM ubuntu:20.04 AS deployOpenCpu
 ENV BRANCH 2.2
