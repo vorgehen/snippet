@@ -35,6 +35,7 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY --from=buildOpenCpu /home/builder/opencpu-lib_*.deb /home/builder/opencpu-lib_*.deb
 COPY --from=buildOpenCpu /home/builder/opencpu-server_*.deb /home/builder/opencpu-server_*.deb
 
+USER root
 RUN \
   apt-get update && \
   apt-get -y dist-upgrade && \
