@@ -73,7 +73,7 @@ RUN \
  
 
 USER opencpu
-COPY --from=buildOpenCpu /usr/local/lib/R/site-library /usr/local/lib/opencpu/site-library
+COPY --from=buildOpenCpu /usr/local/lib/R/site-library /usr/local/lib/R/site-library
 
 USER root
 
