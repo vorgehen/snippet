@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:20.04 AS buildOpenCpu
 
 ENV BRANCH 2.2
 ENV RSTUDIO 1.4.1103
@@ -6,7 +6,7 @@ ENV RSTUDIO 1.4.1103
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install.
-RUN \
+RUN  \
   apt-get update && \
   apt-get -y dist-upgrade && \
   apt-get install -y software-properties-common && \
@@ -25,13 +25,19 @@ RUN \
   wget --quiet https://github.com/opencpu/opencpu-server/archive/v${BRANCH}.tar.gz && \
   tar xzf v${BRANCH}.tar.gz && \
   cd opencpu-server-${BRANCH} && \
-  dpkg-buildpackage -us -uc
+  dpkg-buildpackage -us -uc > /dev/null 2>&1
 
-USER root
+FROM ubuntu:20.04 AS deployOpenCpu
+ENV BRANCH 2.2
+ENV RSTUDIO 1.4.1103
+
+ENV DEBIAN_FRONTEND noninteractive
+COPY --from=buildOpenCpu /home/builder/opencpu-lib_*.deb /home/builder/opencpu-lib_*.deb
+COPY --from=buildOpenCpu /home/builder/opencpu-server_*.deb /home/builder/opencpu-server_*.deb
 
 RUN \
   apt-get install -y libapache2-mod-r-base && \
-  dpkg -i /home/builder/opencpu-lib_*.deb && \
+  dpkg -i /home/builder/opencpu-lib_*.deb  && \
   dpkg -i /home/builder/opencpu-server_*.deb
 
 RUN \
