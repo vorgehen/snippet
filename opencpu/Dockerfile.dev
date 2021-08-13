@@ -37,6 +37,7 @@ RUN \
   dpkg-buildpackage -us -uc > /dev/null
 
 # Build R packages used by Snippet Service
+USER root
 RUN addgroup -group 1001 opencpu && \
     opencpu -S -u 1001 -G opencpu opencpu
 USER opencpu
