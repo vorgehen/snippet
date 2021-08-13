@@ -38,7 +38,8 @@ COPY --from=buildOpenCpu /home/builder/opencpu-lib_*.deb /home/builder/opencpu-l
 COPY --from=buildOpenCpu /home/builder/opencpu-server_*.deb /home/builder/opencpu-server_*.deb
 
 RUN \
-  apt-get install -y gpgv && \
+  apt-get update  && \ 
+  apt-get install -y gpgv gpgv1 gpgv2 && \
   apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084D && \
   add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/' 
 
