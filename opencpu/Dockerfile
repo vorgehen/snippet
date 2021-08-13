@@ -10,7 +10,8 @@ RUN \
 RUN \ 
   add-apt-repository -y ppa:opencpu/opencpu-2.2 && \
   apt-get update && \
-  apt-get upgrade && \
+  apt-get upgrade 
+  
 RUN \ 
   apt-get install -y opencpu-server && \
   apt-get install -y rstudio-server && \
