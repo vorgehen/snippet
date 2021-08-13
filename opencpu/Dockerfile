@@ -5,15 +5,17 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN \
   apt-get update && \
   apt-get -y dist-upgrade && \
-  apt-get install -y software-properties-common && \
+  apt-get install -y software-properties-common
+  
+RUN \ 
   add-apt-repository -y ppa:opencpu/opencpu-2.2 && \
   apt-get update && \
   apt-get upgrade && \
+RUN \ 
   apt-get install -y opencpu-server && \
   apt-get install -y rstudio-server && \
   apt-get install -y pandoc && \
   apt-get install -y texlive-base
-
 
 # Prints apache logs to stdout
 RUN \
