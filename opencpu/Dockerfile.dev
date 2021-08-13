@@ -44,7 +44,8 @@ RUN \
   apt-get -y dist-upgrade 
 
 RUN \
-  apt-get install -y libapache2-mod-r-base 
+  apt-get install -y libapache2-mod-r-base libssl-dev r-base
+ 
 
 RUN \  
   sudo mk-build-deps -i && \
