@@ -41,7 +41,7 @@ RUN \
   apt-get -y dist-upgrade && \
   apt-get install -y software-properties-common && \
   add-apt-repository -y ppa:opencpu/opencpu-2.2 && \
-  apt-get update && \
+  apt-get update
   
 RUN \  
   dpkg -i /home/builder/opencpu-lib_*.deb  && \
