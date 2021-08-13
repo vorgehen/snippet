@@ -36,6 +36,8 @@ COPY --from=buildOpenCpu /home/builder/opencpu-lib_*.deb /home/builder/opencpu-l
 COPY --from=buildOpenCpu /home/builder/opencpu-server_*.deb /home/builder/opencpu-server_*.deb
 
 RUN \
+  add-apt-repository -y ppa:opencpu/opencpu-2.2 && \
+  apt-get update && \
   apt-get install -y libapache2-mod-r-base && \
   dpkg -i /home/builder/opencpu-lib_*.deb  && \
   dpkg -i /home/builder/opencpu-server_*.deb
