@@ -35,16 +35,19 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY --from=buildOpenCpu /home/builder/opencpu-lib_*.deb /home/builder/opencpu-lib_*.deb
 COPY --from=buildOpenCpu /home/builder/opencpu-server_*.deb /home/builder/opencpu-server_*.deb
 
-USER root
+RUN \
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084D\& \
+  sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/' 
+
 RUN \
   apt-get update && \
-  apt-get -y dist-upgrade && \
-  apt-get install -y software-properties-common && \
-  add-apt-repository -y ppa:opencpu/opencpu-2.2 && \
-  apt-get update
-  
+  apt-get -y dist-upgrade 
+
+RUN \
+  apt-get install -y libapache2-mod-r-base 
+
 RUN \  
-  apt-get install -y libapache2-mod-r-base && \
+  sudo mk-build-deps -i && \
   dpkg -i /home/builder/opencpu-lib_*.deb  && \
   dpkg -i /home/builder/opencpu-server_*.deb
 
