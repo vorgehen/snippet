@@ -38,7 +38,7 @@ RUN \
 
 # Build R packages used by Snippet Service
 USER root
-RUN addgroup -group 1001 opencpu && \
+RUN groupadd -g 1010 opencpu && \
     opencpu -S -u 1001 -G opencpu opencpu
 USER opencpu
 RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))' > /dev/null
