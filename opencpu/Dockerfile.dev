@@ -6,6 +6,15 @@ ENV RSTUDIO 1.4.1103
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install.
+RUN \
+  apt-get update && \
+  apt-get -y dist-upgrade && \
+  apt-get install -y software-properties-common gnupg 
+
+RUN \
+  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9  && \
+  add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/' 
+  
 RUN  \
   apt-get update && \
   apt-get -y dist-upgrade && \
@@ -27,6 +36,10 @@ RUN \
   cd opencpu-server-${BRANCH} && \
   dpkg-buildpackage -us -uc > /dev/null
 
+# CREATE Binary Packages
+USER opencpu
+RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))' > /dev/null
+
 FROM ubuntu:20.04 AS deployOpenCpu
 ENV BRANCH 2.2
 ENV RSTUDIO 1.4.1103
@@ -36,7 +49,6 @@ USER root
 ENV DEBIAN_FRONTEND noninteractive
 COPY --from=buildOpenCpu /home/builder/opencpu-lib_*.deb /home/builder/opencpu-lib_*.deb
 COPY --from=buildOpenCpu /home/builder/opencpu-server_*.deb /home/builder/opencpu-server_*.deb
-
 
 
 RUN \
@@ -58,6 +70,12 @@ RUN \
 RUN \  
   dpkg -i /home/builder/opencpu-lib_*.deb  && \
   dpkg -i /home/builder/opencpu-server_*.deb
+ 
+
+USER opencpu
+COPY --from=buildOpenCpu /usr/local/lib/opencpu/site-library /usr/local/lib/opencpu/site-library
+
+USER root
 
 RUN \
   apt-get install -y gdebi-core git sudo && \
@@ -84,10 +102,10 @@ EXPOSE 443
 EXPOSE 8004
 
 # SNIPPET LIBRARIES START
-RUN  apt-get install -y wget make devscripts apache2-dev apache2 libapreq2-dev r-base r-base-dev libapparmor-dev libcurl4-openssl-dev libprotobuf-dev protobuf-compiler libcairo2-dev xvfb xauth xfonts-base curl libssl-dev libxml2-dev libicu-dev pkg-config libssh2-1-dev locales apt-utils
+# RUN  apt-get install -y wget make devscripts apache2-dev apache2 libapreq2-dev r-base r-base-dev libapparmor-dev libcurl4-openssl-dev libprotobuf-dev protobuf-compiler libcairo2-dev xvfb xauth xfonts-base curl libssl-dev libxml2-dev libicu-dev pkg-config libssh2-1-dev locales apt-utils
 
-USER opencpu
-RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))' > /dev/null
+# USER opencpu
+# RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))' > /dev/null
 USER root
 COPY snippet_0.1.7.tar.gz snippet_0.1.7.tar.gz
 RUN R CMD INSTALL snippet_0.1.7.tar.gz --library=/usr/local/lib/R/site-library
