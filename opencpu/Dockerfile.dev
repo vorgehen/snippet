@@ -35,10 +35,12 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY --from=buildOpenCpu /home/builder/opencpu-lib_*.deb /home/builder/opencpu-lib_*.deb
 COPY --from=buildOpenCpu /home/builder/opencpu-server_*.deb /home/builder/opencpu-server_*.deb
 
-RUN \  
+RUN \
+  apt-get update && \
+  apt-get -y dist-upgrade && \
+  apt-get install -y software-properties-common && \
   add-apt-repository -y ppa:opencpu/opencpu-2.2 && \
   apt-get update && \
-  apt-get install -y libapache2-mod-r-base 
   
 RUN \  
   dpkg -i /home/builder/opencpu-lib_*.deb  && \
