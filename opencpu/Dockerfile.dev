@@ -44,7 +44,8 @@ RUN \
   apt-get -y dist-upgrade && \
   apt-get install -y software-properties-common && \
   add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/' 
-
+  
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9
 
 RUN \
   apt-get update && \
