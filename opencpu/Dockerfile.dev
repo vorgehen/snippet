@@ -43,7 +43,7 @@ RUN \
   apt-get -y dist-upgrade 
  
  RUN \
-  apt-get install -y libapache2-mod-r-base libssl-dev r-base r-base-dev apache2 ssl-cert locales
+  apt-get install -y libapache2-mod-r-base libssl-dev r-base r-base-dev apache2 ssl-cert locales wget
 
 RUN \  
   dpkg -i /home/builder/opencpu-lib_*.deb  && \
