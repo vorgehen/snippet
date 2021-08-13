@@ -37,7 +37,7 @@ ENV DEBIAN_FRONTEND noninteractive
 COPY --from=buildOpenCpu /home/builder/opencpu-lib_*.deb /home/builder/opencpu-lib_*.deb
 COPY --from=buildOpenCpu /home/builder/opencpu-server_*.deb /home/builder/opencpu-server_*.deb
 
-
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9
 
 RUN \
   apt-get update && \
@@ -45,7 +45,6 @@ RUN \
   apt-get install -y software-properties-common && \
   add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/' 
   
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9
 
 RUN \
   apt-get update && \
