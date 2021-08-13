@@ -2,11 +2,9 @@
 version: '3'
 services:
   opencpu:
-    volumes:
-      - "./workspace:/home/opencpu:rw"
     build:
       context: ./opencpu
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
       - 8004:8004
