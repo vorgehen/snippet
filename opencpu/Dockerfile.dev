@@ -1,7 +1,6 @@
 FROM ubuntu:20.04 AS buildOpenCpu
 
 ENV BRANCH 2.2
-ENV RSTUDIO 1.4.1103
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -29,6 +28,7 @@ RUN apt-get install -y language-pack-en-base
 
 USER builder
 
+# Build opencpu-server
 RUN \
   cd ~ && \
   wget --quiet https://github.com/opencpu/opencpu-server/archive/v${BRANCH}.tar.gz && \
@@ -36,12 +36,14 @@ RUN \
   cd opencpu-server-${BRANCH} && \
   dpkg-buildpackage -us -uc > /dev/null
 
-# CREATE Binary Packages
+# Build R packages used by Snippet Service
+RUN addgroup -g 1001 opencpu && \
+    opencpu -S -u 1001 -G opencpu opencpu
 USER opencpu
 RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))' > /dev/null
 
 FROM ubuntu:20.04 AS deployOpenCpu
-ENV BRANCH 2.2
+
 ENV RSTUDIO 1.4.1103
 
 USER root
@@ -102,10 +104,6 @@ EXPOSE 443
 EXPOSE 8004
 
 # SNIPPET LIBRARIES START
-# RUN  apt-get install -y wget make devscripts apache2-dev apache2 libapreq2-dev r-base r-base-dev libapparmor-dev libcurl4-openssl-dev libprotobuf-dev protobuf-compiler libcairo2-dev xvfb xauth xfonts-base curl libssl-dev libxml2-dev libicu-dev pkg-config libssh2-1-dev locales apt-utils
-
-# USER opencpu
-# RUN R -e 'install.packages(c("ProjectManagement","tidyverse", "flextable", "here", "kableExtra", "caTools", "bitops"))' > /dev/null
 USER root
 COPY snippet_0.1.7.tar.gz snippet_0.1.7.tar.gz
 RUN R CMD INSTALL snippet_0.1.7.tar.gz --library=/usr/local/lib/R/site-library
